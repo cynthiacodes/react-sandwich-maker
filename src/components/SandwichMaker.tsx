@@ -1,35 +1,40 @@
 import { useState } from "react";
-import Bread from "./Bread";
-import Filling from "./Filling";
+import IngredientAdder from "./IngredientAdder";
+import SandwichPreview from "./SandwichPreview";
 
 function SandwichMaker(): JSX.Element {
+  // better to use single object state
+  // but multiple useState calls fine for now
   const [topLayer, setTopLayer] = useState<string>();
-  const [filling, setFilling] = useState<string>();
+  const [fillings, setFillings] = useState<string[]>([]);
   const [bottomLayer, setBottomLayer] = useState<string>();
+
+  const handleReset = () => {
+    setTopLayer(undefined);
+    setFillings([]);
+    setBottomLayer(undefined);
+  };
 
   return (
     <>
-      <h2>Sandwich preview</h2>
-      {topLayer && <Bread position={"top"} type={topLayer} />}
-      {filling && <Filling type={filling} />}
-      {bottomLayer && <Bread position={"bottom"} type={bottomLayer} />}
+      <SandwichPreview
+        topBread={topLayer}
+        fillings={fillings}
+        bottomBread={bottomLayer}
+      />
 
-      <section>
-        <h3>Top layer of bread</h3>
-        {!topLayer && <p>Make sure you pick a top for your sandwich!</p>}
-        <button onClick={() => setTopLayer("white")}>White</button>
-        <button onClick={() => setTopLayer("brown")}>Brown</button>
-      </section>
-      <section>
-        <h3>Filling</h3>
-        <button onClick={() => setFilling("jam")}>Jam</button>
-        <button onClick={() => setFilling("lettuce")}>Lettuce</button>
-      </section>
-      <section>
-        <h3>Bottom layer of bread</h3>
-        <button onClick={() => setBottomLayer("white")}>White</button>
-        <button onClick={() => setBottomLayer("brown")}>Brown</button>
-      </section>
+      <IngredientAdder
+        topBread={topLayer}
+        handlePickTop={(breadType: string) => setTopLayer(breadType)}
+        handleAddFilling={(fillingType: string) => {
+          setFillings([...fillings, fillingType]);
+          // better:
+          // setFillings(prevFillings => [...prevFillings, fillingType])
+        }}
+        handlePickBottom={(breadType: string) => setBottomLayer(breadType)}
+      />
+
+      <button onClick={handleReset}>Bin sandwich</button>
     </>
   );
 }
