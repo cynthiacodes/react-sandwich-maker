@@ -23,7 +23,7 @@ function IngredientAdder({
         <h3>Filling</h3>
         <button onClick={() => handleAddFilling("jam")}>Jam</button>
         <button onClick={() => handleAddFilling("lettuce")}>Lettuce</button>
-        <button onClick={() => handleAddFilling("cheese")}>Lettuce</button>
+        <button onClick={() => handleAddFilling("cheese")}>Cheese</button>
       </section>
       <section>
         <h3>Bottom layer of bread</h3>
