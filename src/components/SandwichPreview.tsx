@@ -13,14 +13,14 @@ function SandwichPreview({
   bottomBread,
 }: SandwichPreviewProps): JSX.Element {
   return (
-    <>
+    <div className="sandwich-preview">
       <h2>Sandwich preview</h2>
       {topBread && <Bread position={"top"} type={topBread} />}
       {fillings.map((filling, idx) => (
         <Filling key={idx} type={filling} />
       ))}
       {bottomBread && <Bread position={"bottom"} type={bottomBread} />}
-    </>
+    </div>
   );
 }
 
